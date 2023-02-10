@@ -1,5 +1,6 @@
 package br.com.superest.api.resources;
 
+import br.com.superest.api.domain.Usuario;
 import br.com.superest.api.domain.dto.UsuarioDto;
 import br.com.superest.api.services.UserServices;
 import org.modelmapper.ModelMapper;
@@ -40,6 +41,12 @@ public class UserResources {
         return ResponseEntity.created(uri).build();
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<UsuarioDto> update(@PathVariable Integer id, @RequestBody UsuarioDto obj){
+    obj.setId(id);
+    Usuario newObj = service.update(obj);
+    return ResponseEntity.ok().body(mapper.map(newObj, UsuarioDto.class));
+    }
 
 
 }
