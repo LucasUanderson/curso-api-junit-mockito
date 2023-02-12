@@ -1,7 +1,7 @@
 package br.com.superest.api.services.impl;
 
-import br.com.superest.api.domain.Usuario;
-import br.com.superest.api.domain.dto.UsuarioDto;
+import br.com.superest.api.domain.User;
+import br.com.superest.api.domain.dto.UserDto;
 import br.com.superest.api.repositories.UserRepository;
 import br.com.superest.api.services.UserServices;
 import br.com.superest.api.services.exceptions.DataIntegratyViolationException;
@@ -24,25 +24,25 @@ public class UserServiceImpl implements UserServices {
     private ModelMapper mapper;
 
     @Override
-    public Usuario findById(Integer id) {
-        Optional<Usuario> obj = repository.findById(id);
+    public User findById(Integer id) {
+        Optional<User> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
     }
 
-    public List<Usuario> findAll(){
+    public List<User> findAll(){
         return repository.findAll();
     }
 
     @Override
-    public Usuario create(UsuarioDto obj) {
+    public User create(UserDto obj) {
         findByEmail(obj);
-        return repository.save(mapper.map(obj,Usuario.class));
+        return repository.save(mapper.map(obj, User.class));
     }
 
     @Override
-    public Usuario update(UsuarioDto obj) {
+    public User update(UserDto obj) {
         findByEmail(obj);
-        return repository.save(mapper.map(obj, Usuario.class));
+        return repository.save(mapper.map(obj, User.class));
     }
 
     @Override
@@ -53,8 +53,8 @@ public class UserServiceImpl implements UserServices {
 
 
     //Excecao para email ja cadastrado
-    private void  findByEmail(UsuarioDto obj){
-        Optional<Usuario> user = repository.findByEmail(obj.getEmail());
+    private void  findByEmail(UserDto obj){
+        Optional<User> user = repository.findByEmail(obj.getEmail());
         if(user.isPresent() && !user.get().getId().equals(obj.getId())){
             throw  new DataIntegratyViolationException("E-mail já cadastrado no sistema ");
         }

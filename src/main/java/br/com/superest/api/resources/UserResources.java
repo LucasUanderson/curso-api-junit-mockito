@@ -1,7 +1,7 @@
 package br.com.superest.api.resources;
 
-import br.com.superest.api.domain.Usuario;
-import br.com.superest.api.domain.dto.UsuarioDto;
+import br.com.superest.api.domain.User;
+import br.com.superest.api.domain.dto.UserDto;
 import br.com.superest.api.services.UserServices;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,32 +25,32 @@ public class UserResources {
     private UserServices service;
 
     @GetMapping(value =ID)
-    public ResponseEntity<UsuarioDto> findById(@PathVariable Integer id){
-        return ResponseEntity.ok().body(mapper.map(service.findById(id),UsuarioDto.class));
+    public ResponseEntity<UserDto> findById(@PathVariable Integer id){
+        return ResponseEntity.ok().body(mapper.map(service.findById(id), UserDto.class));
     }
 
     @GetMapping
-    public ResponseEntity<List<UsuarioDto>> findAll() {
+    public ResponseEntity<List<UserDto>> findAll() {
         return ResponseEntity.ok().body(service.findAll()
-                .stream().map(x -> mapper.map(x, UsuarioDto.class)).collect(Collectors.toList()));
+                .stream().map(x -> mapper.map(x, UserDto.class)).collect(Collectors.toList()));
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDto> create(@RequestBody UsuarioDto obj){
+    public ResponseEntity<UserDto> create(@RequestBody UserDto obj){
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest().path(ID).buildAndExpand(service.create(obj).getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping(value = ID)
-    public ResponseEntity<UsuarioDto> update(@PathVariable Integer id, @RequestBody UsuarioDto obj){
+    public ResponseEntity<UserDto> update(@PathVariable Integer id, @RequestBody UserDto obj){
     obj.setId(id);
-    Usuario newObj = service.update(obj);
-    return ResponseEntity.ok().body(mapper.map(newObj, UsuarioDto.class));
+    User newObj = service.update(obj);
+    return ResponseEntity.ok().body(mapper.map(newObj, UserDto.class));
     }
 
     @DeleteMapping(value = ID)
-    public ResponseEntity<UsuarioDto> delete(@PathVariable Integer id){
+    public ResponseEntity<UserDto> delete(@PathVariable Integer id){
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

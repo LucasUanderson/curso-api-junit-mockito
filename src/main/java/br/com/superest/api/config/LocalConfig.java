@@ -1,6 +1,6 @@
 package br.com.superest.api.config;
 
-import br.com.superest.api.domain.Usuario;
+import br.com.superest.api.domain.User;
 import br.com.superest.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,8 +22,8 @@ public class LocalConfig {
     @Bean
     public void startDB(){
 
-        Usuario u1 = new Usuario(null, "lucas", "lucas@gmail.com", "123");
-        Usuario u2 = new Usuario(null, "bia", "bia@gmail.com", "123");
+        User u1 = new User(null, "lucas", "lucas@gmail.com", "123");
+        User u2 = new User(null, "bia", "bia@gmail.com", "123");
 
         repository.saveAll(List.of(u1 , u2));
 

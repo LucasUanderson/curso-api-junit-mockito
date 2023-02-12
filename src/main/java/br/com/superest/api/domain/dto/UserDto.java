@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioDto {
+public class UserDto {
 
     private Integer id;
     private String name;
