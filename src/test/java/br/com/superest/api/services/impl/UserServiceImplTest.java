@@ -3,6 +3,7 @@ package br.com.superest.api.services.impl;
 import br.com.superest.api.domain.User;
 import br.com.superest.api.domain.dto.UserDto;
 import br.com.superest.api.repositories.UserRepository;
+import br.com.superest.api.services.exceptions.DataIntegratyViolationException;
 import br.com.superest.api.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -99,6 +100,20 @@ class UserServiceImplTest {
         assertEquals(EMAIL, response.getEmail());
         assertEquals(PASSWORD, response.getPassword());
     }
+
+    @Test
+    void whenCreateThenReturnAnDataIntegrityViolationException(){
+        Mockito.when(repository.findByEmail(Mockito.anyString())).thenReturn(optionalUser);
+
+        try{
+            optionalUser.get().setId(2);
+            service.create(userDto);
+        }catch (Exception ex){
+            assertEquals(DataIntegratyViolationException.class, ex.getClass());
+            assertEquals("E-mail já cadastrado no sistema ", ex.getMessage());
+        }
+    }
+
 
     @Test
     void update() {
