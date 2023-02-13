@@ -132,6 +132,19 @@ class UserServiceImplTest {
     }
 
     @Test
+    void whenUpdateThenReturnAnDataIntegrityViolationException(){
+        Mockito.when(repository.findByEmail(Mockito.anyString())).thenReturn(optionalUser).thenThrow( new DataIntegratyViolationException("E-mail já cadastrado no sistema "));
+
+        try{
+            service.create(userDto);
+        }catch (Exception ex){
+            assertEquals(DataIntegratyViolationException.class, ex.getClass());
+            assertEquals("E-mail já cadastrado no sistema ", ex.getMessage());
+        }
+    }
+
+
+    @Test
     void delete() {
     }
 
