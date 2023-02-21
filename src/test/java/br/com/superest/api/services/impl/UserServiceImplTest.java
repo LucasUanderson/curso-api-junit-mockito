@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.List;
 import java.util.Optional;
@@ -109,7 +110,7 @@ class UserServiceImplTest {
             optionalUser.get().setId(2);
             service.create(userDto);
         }catch (Exception ex){
-            assertEquals(DataIntegratyViolationException.class, ex.getClass());
+            assertEquals(DataIntegrityViolationException.class, ex.getClass());
             assertEquals("E-mail já cadastrado no sistema ", ex.getMessage());
         }
     }

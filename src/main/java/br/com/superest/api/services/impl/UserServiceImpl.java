@@ -4,10 +4,10 @@ import br.com.superest.api.domain.User;
 import br.com.superest.api.domain.dto.UserDto;
 import br.com.superest.api.repositories.UserRepository;
 import br.com.superest.api.services.UserServices;
-import br.com.superest.api.services.exceptions.DataIntegratyViolationException;
 import br.com.superest.api.services.exceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserServices {
     private void  findByEmail(UserDto obj){
         Optional<User> user = repository.findByEmail(obj.getEmail());
         if(user.isPresent() && !user.get().getId().equals(obj.getId())){
-            throw  new DataIntegratyViolationException("E-mail já cadastrado no sistema ");
+            throw  new DataIntegrityViolationException("E-mail já cadastrado no sistema ");
         }
     }
 
